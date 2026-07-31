@@ -498,31 +498,7 @@
     font-weight: 600;
   }
 
-  /* QUICK START CHECKLIST */
-  .checklist { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
-  .checklist li {
-    display: flex; align-items: flex-start; gap: 12px;
-    background: var(--scroll); border: 1px solid var(--parchment-dark);
-    border-radius: 8px; padding: 14px 16px; cursor: pointer;
-    transition: all 0.2s;
-  }
-  .checklist li:hover { border-color: var(--gold); transform: translateX(3px); }
-  .checklist li.done { opacity: 0.55; text-decoration: line-through; border-color: var(--jade); }
-  .check-box {
-    width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--gold);
-    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    font-size: 12px; transition: all 0.2s; margin-top: 1px;
-  }
-  .checklist li.done .check-box {
-    background: var(--jade); border-color: var(--jade); color: white;
-  }
-  .check-text h5 { font-family: 'Noto Serif', serif; font-size: 14px; font-weight: 700; color: var(--ink-mid); margin-bottom: 3px; }
-  .check-text p { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
-  .checklist-reset {
-    margin-top: 12px; font-size: 12px; color: var(--ink-soft); cursor: pointer;
-    text-decoration: underline; display: inline-block;
-  }
-  .checklist-reset:hover { color: var(--gold); }
+  
 
   /* DI GIAO CARDS */
   .di-giao-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 28px; }
@@ -544,6 +520,25 @@
   .dg-hook { margin-top: 10px; font-size: 12px; font-style: italic; color: var(--ink-soft); padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.08); }
   .dg-hook strong { color: var(--red); }
 
+
+  /* TM BADGES */
+  .tm-badge {
+    display: inline-block; font-size: 10.5px; font-weight: 600;
+    padding: 3px 10px; border-radius: 12px; margin-top: 10px;
+  }
+  .tm-card[data-tm="ta"] {
+    border-left: 3px solid #C03020;
+  }
+  .tm-card[data-tm="xam"] {
+    border-left: 3px solid var(--gold);
+  }
+  .tm-card[data-tm="chinh"] {
+    border-left: 3px solid var(--jade);
+  }
+  .tm-card.tm-hidden {
+    display: none;
+  }
+
 </style>
 </head>
 <body>
@@ -561,7 +556,6 @@
   <a href="#than-gioi">Thần Giới</a>
   <a href="#di-giao">Dị Giáo</a>
   <a href="#loi-choi">Lối Chơi</a>
-  <a href="#checklist">Checklist</a>
 </nav>
 
 <!-- HERO -->
@@ -787,7 +781,7 @@
     </ul>
   </div>
 
-  <div class="tabs" style="margin-top: 24px;">
+  <div class="tabs" id="pm-tabs" style="margin-top: 24px;">
     <button class="tab-btn active" onclick="switchTab('group1')">⚔️ Chủ Chiến (6)</button>
     <button class="tab-btn" onclick="switchTab('group2')">📜 Bách Nghệ (6)</button>
     <button class="tab-btn" onclick="switchTab('group3')">🦂 Điều Khiển (3)</button>
@@ -961,62 +955,185 @@
 <div style="background: #F0E8CE;">
 <div class="section">
   <div class="section-label">Các thế lực lớn</div>
-  <h2 class="section-title">Lục Đại Tông Môn & Danh Môn</h2>
+  <h2 class="section-title">Tông Môn, Danh Gia & Tổ Chức</h2>
   <p class="section-intro">
-    Tông môn là các tổ chức tu tiên lớn cai quản linh mạch và đào tạo đệ tử. Gia nhập tông môn mang lại bảo hộ, tài nguyên và bí kíp — nhưng cũng có nghĩa vụ và hệ thống quy củ chặt chẽ. Bạn cũng có thể chọn làm <em>tán tu</em> (tu hành tự do) nếu không muốn bị ràng buộc.
+    Tông môn kiểm soát linh mạch và đào tạo đệ tử. Gia nhập mang lại bảo hộ, bí kíp, tài nguyên — nhưng cũng có nghĩa vụ và luật lệ nội bộ. Bạn cũng có thể chọn làm <em>tán tu</em> tự do. Dùng bộ lọc bên dưới để tìm nơi phù hợp pháp môn của bạn.
   </p>
-  <div class="tong-mon-grid">
-    <div class="tm-card">
+
+  <div class="tabs" id="tm-filter-tabs">
+    <button class="tab-btn active" onclick="filterTM('all', this)">📋 Tất cả</button>
+    <button class="tab-btn" onclick="filterTM('chinh', this)">✅ Chính đạo</button>
+    <button class="tab-btn" onclick="filterTM('xam', this)">⚠️ Vùng xám</button>
+    <button class="tab-btn" onclick="filterTM('ta', this)">🚫 Tà đạo / Ngầm</button>
+  </div>
+
+  <div class="tong-mon-grid" id="tm-grid">
+
+    <!-- CHÍNH ĐẠO -->
+    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">⚔️ Thiên Diễn Kiếm Tông</div>
-      <div class="tm-type">Kiếm Tu · Đứng đầu Lục Đại Tông Môn</div>
-      <p>Tông môn kiếm tu quyền lực nhất Nhân Giới. Đặt tại dãy núi phía Bắc Trung Châu. Trọng đạo tâm và kiếm ý tinh thuần hơn số lượng đệ tử.</p>
+      <div class="tm-type">Kiếm Tu · Đứng đầu Lục Đại Tông Môn · Trung Châu Bắc</div>
+      <p>Tông môn kiếm tu quyền lực nhất Nhân Giới. Trọng đạo tâm và kiếm ý tinh thuần hơn số lượng đệ tử. Hay so tài với Phá Sơn Đao Tông — không thù không bạn nhưng đối trọng tự nhiên.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
-    <div class="tm-card">
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">🪓 Phá Sơn Đao Tông</div>
+      <div class="tm-type">Đao Tu · Tây Vực (vách đá sa mạc phía Đông)</div>
+      <p>Tông môn chiến đấu thuần túy, nổi tiếng cương mãnh. Đệ tử đa số xuất thân võ gia, quân đội. <em>Không trọng xuất thân — chỉ trọng thực lực.</em> Đối trọng tự nhiên với Thiên Diễn Kiếm Tông.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">🌀 Thanh Vân Tiên Tông</div>
-      <div class="tm-type">Pháp Tu + Phù Sư + Trận Sư · Trung Châu</div>
-      <p>Tông môn trận pháp-pháp thuật, nổi tiếng về kết giới và phù chú. Nằm trên núi cổ phía Đông Trung Châu. Cũng có nhánh họa tu giao thoa trận đạo.</p>
+      <div class="tm-type">Pháp Tu · Phù Sư · Trận Sư · Trung Châu Đông</div>
+      <p>Tông môn trận pháp-pháp thuật đỉnh cao. Kết giới và phù chú là thế mạnh cốt lõi. Cũng có nhánh Họa tu giao thoa với trận đạo. Nằm trên núi cổ phía Đông Trung Châu.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
-    <div class="tm-card">
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">🖌️ Thiên Họa Các</div>
+      <div class="tm-type">Họa Tu · Vừa tông môn vừa học viện</div>
+      <p>Đệ tử ít nhưng tinh — cần vừa có linh căn vừa có thiên phú hội họa. Cấp thấp vẽ phù ẩn trong tranh, cấp cao biến tranh thành thật. Chính đạo công nhận hoàn toàn, tôn trọng ngang Nho tu.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <div class="tm-card" data-tm="xam">
+      <div class="tm-name">🎵 Huyền Âm Tông</div>
+      <div class="tm-type">Huyễn Thuật · Âm Tu · Đông Nam Lâm Địa</div>
+      <p>Tông môn nửa chính nửa tà — huyễn thuật và âm tu là hai thế mạnh cốt lõi. Ẩn trong thung lũng sương mù sâu rừng Đông Nam. Chính đạo không cấm nhưng không hoàn toàn tin tưởng.</p>
+      <span class="tm-badge badge-xam">Vùng xám</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">💪 Cửu Hoang Thể Tông</div>
+      <div class="tm-type">Thể Tu · Đứng đầu về thể tu · Bắc Nguyên</div>
+      <p>Tông môn thể tu đứng đầu Nhân Giới. Tuyển đệ tử khắt khe. Khí hậu khắc nghiệt Bắc Nguyên là điều kiện lý tưởng rèn nhục thân. Chi phí tu luyện cao — đan dược bồi bổ tốn kém.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">📚 Thánh Văn Các</div>
-      <div class="tm-type">Nho Tu · Học viện & Pháp lý Nhân Giới</div>
-      <p>Không phải tông môn chiến đấu — là học viện kiêm tổ chức pháp lý. Soạn thảo khế ước, phân xử tranh chấp. Không ai dám phá khế ước có dấu Thánh Văn Các.</p>
+      <div class="tm-type">Nho Tu · Học viện & Pháp lý Nhân Giới · Kinh thành</div>
+      <p>Không phải tông môn chiến đấu — là học viện kiêm tổ chức pháp lý. Soạn thảo khế ước, phân xử tranh chấp. <em>Không ai dám phá khế ước có dấu Thánh Văn Các.</em></p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
-    <div class="tm-card">
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">💊 Vạn Dược Cốc</div>
+      <div class="tm-type">Luyện Đan · Nam Viêm Địa · Gần Ly Hoang</div>
+      <p>Cung cấp 6/10 đan dược toàn Nhân Giới. Đặt trong thung lũng dược thảo sâu rừng nhiệt đới. Quyền lực y dược gần như độc quyền. Tranh nhau quyền ưu tiên vào Vân Mộng Trạch mỗi chu kỳ.</p>
+      <span class="tm-badge badge-chinh">Chính đạo — Được tôn trọng toàn tam giới</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">⚙️ Tư Thiên Gia</div>
+      <div class="tm-type">Luyện Khí · Danh gia · Bắc Tây Kim Nguyên</div>
+      <p>Gia tộc danh gia chế tác pháp khí hàng đầu. Được nghi ngờ giữ bí thuật luyện khí thượng cổ. Kết hợp chặt với Cửu Cơ Các — cùng hướng chế tác pháp khí.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">🔩 Cửu Cơ Các</div>
+      <div class="tm-type">Khôi Lỗi · Vừa tông môn vừa thương hội · Tây Vực</div>
+      <p>Tổ chức chế tác và nghiên cứu bù nhìn cơ khí. Bán sản phẩm cho cả tông môn lẫn triều đình. Đặt tại vùng sa mạc ít linh khí — buộc phải dùng cơ quan thay thế nhân lực. Quan hệ gần Tư Thiên Gia.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">🌙 Thái Hư Đạo Cung</div>
+      <div class="tm-type">Thiên Cơ · Biệt lập · Ốc đảo giữa sa mạc Tây Vực</div>
+      <p>Tổ chức thiên cơ/bói toán/bí thuật cổ. Biệt lập hoàn toàn, không can thiệp tranh chấp. Tổ chức duy nhất dự đoán sơ bộ được thời điểm xuất hiện Hồng Hoang Dị Địa.</p>
+      <span class="tm-badge badge-chinh">Chính đạo — Trung lập tuyệt đối</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">💰 Thiên Bảo Các</div>
       <div class="tm-type">Thương Hội · Kinh thành Lục Thị</div>
-      <p>Thương hội lớn nhất Nhân Giới, chi nhánh khắp mọi thành thị. Vừa buôn bán vừa có lực lượng hộ vệ riêng. Quyền lực kinh tế ngang tông môn chiến đấu.</p>
+      <p>Thương hội lớn nhất Nhân Giới, chi nhánh khắp mọi thành thị. Vừa buôn bán vừa có lực lượng hộ vệ riêng. Quyền lực kinh tế ngang tông môn chiến đấu. Hay dùng Thánh Văn Các làm trung gian.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
-    <div class="tm-card">
-      <div class="tm-name">💊 Vạn Dược Cốc</div>
-      <div class="tm-type">Luyện Đan · Nam Viêm Địa</div>
-      <p>Cung cấp 6/10 đan dược toàn Nhân Giới. Đặt trong thung lũng dược thảo sâu trong rừng nhiệt đới. Quyền lực y dược gần như độc quyền.</p>
-    </div>
-    <div class="tm-card">
-      <div class="tm-name">💪 Cửu Hoang Thể Tông</div>
-      <div class="tm-type">Thể Tu · Bắc Nguyên</div>
-      <p>Tông môn thể tu đứng đầu Nhân Giới. Tuyển đệ tử khắt khe về thể chất. Khí hậu khắc nghiệt Bắc Nguyên là điều kiện lý tưởng để rèn luyện nhục thân.</p>
-    </div>
-    <div class="tm-card">
-      <div class="tm-name">⚙️ Tư Thiên Gia</div>
-      <div class="tm-type">Luyện Khí · Bắc Tây Kim Nguyên</div>
-      <p>Gia tộc danh gia chế tác pháp khí hàng đầu. Được nghi ngờ giữ bí thuật luyện khí thượng cổ. Kết hợp chặt với Cửu Cơ Các.</p>
-    </div>
-    <div class="tm-card">
+
+    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">🏹 Hắc Vũ Các</div>
-      <div class="tm-type">Cung Tu · Đông Lâm Châu</div>
-      <p>Tổ chức nhỏ, đệ tử ít nhưng tinh. Chuyên cung tu chiến trường và ám sát tầm xa. Nhận nhiệm vụ có chọn lọc — chỉ cần đủ linh thạch.</p>
+      <div class="tm-type">Cung Tu · Đông Lâm Châu · Ẩn trong rừng ven biển</div>
+      <p>Tổ chức nhỏ, đệ tử ít nhưng tinh. Chuyên cung tu chiến trường và ám sát tầm xa. Nhận nhiệm vụ hộ tiêu và ám sát có chọn lọc — <em>chỉ cần đủ linh thạch</em>.</p>
+      <span class="tm-badge badge-chinh">Chính đạo — Danh tiếng ám sát</span>
     </div>
-    <div class="tm-card">
-      <div class="tm-name">🌙 Thái Hư Đạo Cung</div>
-      <div class="tm-type">Thiên Cơ · Tây Vực</div>
-      <p>Tổ chức thiên cơ/bói toán/bí thuật cổ ở ốc đảo giữa sa mạc Tây Vực. Biệt lập hoàn toàn, không can thiệp tranh chấp. Tổ chức duy nhất dự đoán được Hồng Hoang Dị Địa.</p>
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">🏛️ Mộ Dung Thị</div>
+      <div class="tm-type">Trận Đạo · Danh gia · Trung Châu</div>
+      <p>Danh gia trận đạo gia truyền. Không có tông môn quy mô lớn nhưng trận pháp Mộ Dung được xếp ngang Thanh Vân Tiên Tông. Chuyên thiết kế trận hộ sơn cho các thế lực lớn theo hợp đồng.</p>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
-    <div class="tm-card">
+
+    <div class="tm-card" data-tm="chinh">
+      <div class="tm-name">🐉 Linh Thú Sơn Trang</div>
+      <div class="tm-type">Ngự Thú · Vùng biên Nhân-Yêu Giới · Trung lập</div>
+      <p>Không phải tông môn chính thống — vừa nuôi thú vừa làm trung gian giao dịch linh thú giữa Nhân và Yêu Giới. Lập trường trung lập. Nơi Ngự thú sư tụ tập nhiều nhất Nhân Giới.</p>
+      <span class="tm-badge badge-chinh">Chính đạo — Quan hệ phức tạp với Yêu tộc</span>
+    </div>
+
+    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">⛩️ Linh Sơn Tự</div>
-      <div class="tm-type">Phật Tu · Đông Bắc Sơn Địa</div>
+      <div class="tm-type">Phật Tu · Trung lập · Đông Bắc Sơn Địa</div>
       <p>Tự viện trung lập, không thuộc Lục Đại Tông Môn. Chuyên tịnh hóa ma khí, giải trừ tâm ma. Được cả Nhân/Yêu/Ma tôn trọng — ngay cả ma tu hiếm khi chủ động gây sự.</p>
+      <span class="tm-badge badge-chinh">Chính đạo — Kính nhi viễn chi</span>
     </div>
-  </div>
+
+    <!-- VÙNG XÁM -->
+    <div class="tm-card" data-tm="xam">
+      <div class="tm-name">🌿 Diệp Gia</div>
+      <div class="tm-type">Độc Tu · Y thuật · Danh gia · Tây Nam Trạch Địa</div>
+      <p>Gia tộc danh gia về y thuật và độc thuật. Ranh giới giữa y và độc rất mờ trong Diệp Gia — cùng một vị thuốc, liều lượng khác nhau là chữa bệnh hay giết người. Có chi nhánh tại Tây Nam Trạch Địa, quan hệ ngầm với Vạn Trùng Cốc.</p>
+      <span class="tm-badge badge-xam">Vùng xám</span>
+    </div>
+
+    <div class="tm-card" data-tm="xam">
+      <div class="tm-name">🦂 Vạn Trùng Cốc</div>
+      <div class="tm-type">Cổ Sư (bí truyền) · Độc Tu · Tây Nam Trạch Địa</div>
+      <p>Bên ngoài chuyên Độc tu và y thuật; Cổ sư là nhánh <strong>bí truyền chỉ truyền nội bộ, không công khai</strong>. Ẩn sâu trong thung lũng độc vụ. Quan hệ ngầm với Diệp Gia. Khó ra vào nếu không được dẫn đường.</p>
+      <span class="tm-badge badge-xam">Vùng xám</span>
+    </div>
+
+    <!-- TÀ ĐẠO / TỔ CHỨC NGẦM -->
+    <div class="tm-card" data-tm="xam">
+      <div class="tm-name">💞 Hoan Hỷ Tông</div>
+      <div class="tm-type">Hợp Hoan · Tổ chức bí mật · Không cố định</div>
+      <p>Tồn tại bí mật, bên ngoài giả dạng tông môn tu luyện bình thường. Bị triệt phá định kỳ nhưng luôn tái xuất hiện ở nơi khác — vì <em>nhu cầu thực sự tồn tại trong giới tu sĩ, không thể diệt tận gốc.</em></p>
+      <span class="tm-badge badge-xam">Vùng xám — Xã hội kỳ thị</span>
+    </div>
+
+    <div class="tm-card" data-tm="xam">
+      <div class="tm-name">👁️ Ly Hồn Đường</div>
+      <div class="tm-type">Hồn Tu · Mạng lưới truyền thừa bí mật</div>
+      <p>Không phải tổ chức chính thức — là mạng lưới bí mật giữa các Hồn tu sư. Không có trụ sở, không có danh sách đệ tử, liên lạc qua ký hiệu ẩn. Chính đạo biết có tồn tại nhưng không thể truy tận gốc.</p>
+      <span class="tm-badge badge-xam">Vùng xám — Không thể truy tìm</span>
+    </div>
+
+    <div class="tm-card" data-tm="ta">
+      <div class="tm-name">💀 Tây Sa Thi Điện</div>
+      <div class="tm-type">Thi Khôi · Tà đạo · Sa mạc Tây Nhân Giới</div>
+      <p>Ẩn trong địa cung sâu dưới cát, luyện chế "Khô Thi" sa mạc có da cứng như thiết thạch bằng khí hậu khô nóng và "Huyết Sa độc khí". Chuyên săn cổ mộ và thu gom xác tu sĩ tử trận. Nhờ pháo đài sa mạc tự nhiên bảo vệ nên vẫn tồn tại dù bị truy diệt.</p>
+      <span class="tm-badge badge-ta">Tà đạo</span>
+    </div>
+
+    <div class="tm-card" data-tm="ta">
+      <div class="tm-name">🩸 Xích Liên Giáo</div>
+      <div class="tm-type">Huyết Tu (tà nhánh) · Ẩn trong thành thị lớn</div>
+      <p>Tà giáo dùng máu người làm nhiên liệu tu luyện. Núp bóng thương hội và lầu xanh trong thành thị lớn. Bị cả Nhân Giới lẫn Ma Giới chính thống ghét — <em>vì không theo luật nào cả.</em></p>
+      <span class="tm-badge badge-ta">Tà đạo</span>
+    </div>
+
+    <div class="tm-card" data-tm="ta">
+      <div class="tm-name">👻 U Minh Giáo</div>
+      <div class="tm-type">Quỷ Tu · Tà đạo · Liên hệ ngầm với Dị Giáo Hung Thú</div>
+      <p>Tà giáo thờ Quỷ Vương hư cấu — thực chất có liên hệ ngầm với 1 trong 4 Dị Giáo Hung Thú. Chuyên chiêu mộ kẻ chết oan, người hận thù sâu nặng. Bị chính đạo liệt cùng hàng Thi khôi.</p>
+      <span class="tm-badge badge-ta">Tà đạo</span>
+    </div>
+
+  </div><!-- end tm-grid -->
 </div>
 </div>
 
@@ -1313,69 +1430,6 @@
 </div>
 </div>
 
-<!-- QUICK START CHECKLIST -->
-<div id="checklist"></div>
-<div style="background: #F0E8CE;">
-<div class="section">
-  <div class="section-label">Bắt Đầu Ngay Hôm Nay</div>
-  <h2 class="section-title">Checklist Tân Thủ</h2>
-  <p class="section-intro">Tick từng bước để theo dõi tiến trình bắt đầu hành trình của bạn. Trạng thái được lưu trong trình duyệt.</p>
-
-  <ul class="checklist" id="starter-checklist">
-    <li onclick="toggleCheck(this, 0)">
-      <div class="check-box">✓</div>
-      <div class="check-text">
-        <h5>Chọn pháp môn chính</h5>
-        <p>Đọc kỹ 26 pháp môn ở mục Pháp Môn, chọn 1 pháp môn phù hợp phong cách bạn nhất. Ưu tiên nhóm Chủ Chiến nếu muốn đơn giản. Bách Nghệ nếu muốn kinh tế. Đặc Thù nếu muốn rủi ro/phần thưởng cao.</p>
-      </div>
-    </li>
-    <li onclick="toggleCheck(this, 1)">
-      <div class="check-box">✓</div>
-      <div class="check-text">
-        <h5>Chọn vùng xuất phát</h5>
-        <p>Khuyến nghị tân thủ: Trung Châu (an toàn, đầy đủ) hoặc Đông Lâm Châu (thương mại). Đọc mô tả từng vùng ở mục Nhân Giới để quyết định.</p>
-      </div>
-    </li>
-    <li onclick="toggleCheck(this, 2)">
-      <div class="check-box">✓</div>
-      <div class="check-text">
-        <h5>Quyết định gia nhập tông môn hay tán tu</h5>
-        <p>Tông môn: bảo hộ, bí kíp, tài nguyên — nhưng bị ràng buộc luật lệ nội bộ. Tán tu: tự do nhưng nguy hiểm hơn. Đọc mục Tông Môn để chọn nơi phù hợp với pháp môn của bạn.</p>
-      </div>
-    </li>
-    <li onclick="toggleCheck(this, 3)">
-      <div class="check-box">✓</div>
-      <div class="check-text">
-        <h5>Nắm rõ cảnh giới tu luyện</h5>
-        <p>Đọc mục Cảnh Giới — đặc biệt là Luyện Khí, Trúc Cơ, Kim Đan. Đó là 3 cảnh giới đầu bạn sẽ trải qua. Hiểu thọ nguyên và sức mạnh ở mỗi bước.</p>
-      </div>
-    </li>
-    <li onclick="toggleCheck(this, 4)">
-      <div class="check-box">✓</div>
-      <div class="check-text">
-        <h5>Tìm hiểu về Bí Cảnh gần nhất</h5>
-        <p>Đọc mục Bí Cảnh. Vân Mộng Trạch mở 3 năm/lần — cơ hội tốt nhất cho tân thủ. Vạn Kiếm Uyên tốt cho bất kỳ pháp môn nào cần ngộ tính.</p>
-      </div>
-    </li>
-    <li onclick="toggleCheck(this, 5)">
-      <div class="check-box">✓</div>
-      <div class="check-text">
-        <h5>Hiểu ranh giới Nhân Giới — Yêu Giới</h5>
-        <p>Không có kết giới cứng. Bước vào lãnh thổ Yêu Giới là tuân luật của họ. Đọc mục Yêu Giới để biết tộc nào thân thiện, tộc nào nguy hiểm với tân thủ.</p>
-      </div>
-    </li>
-    <li onclick="toggleCheck(this, 6)">
-      <div class="check-box">✓</div>
-      <div class="check-text">
-        <h5>Lập profile nhân vật</h5>
-        <p>Bạn đã có đủ thông tin để tạo nhân vật: pháp môn chính, xuất phát điểm, lập trường (chính đạo/vùng xám), mục tiêu ngắn hạn. Hành trình bắt đầu từ đây!</p>
-      </div>
-    </li>
-  </ul>
-  <span class="checklist-reset" onclick="resetChecklist()">↺ Đặt lại checklist</span>
-</div>
-</div>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-title">⛩ Thương Minh Đại Lục</div>
@@ -1385,32 +1439,42 @@
 
 
 <script>
-// --- TAB SWITCHING ---
+// ── PHÁP MÔN TAB SWITCHING (scoped to #pm-tabs) ──
 function switchTab(group) {
+  document.querySelectorAll('#pm-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + group).classList.add('active');
   event.target.classList.add('active');
 }
 
-// --- PROGRESS BAR ---
+// ── TÔNG MÔN FILTER (scoped to #tm-filter-tabs) ──
+function filterTM(type, btn) {
+  document.querySelectorAll('#tm-filter-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#tm-grid .tm-card').forEach(card => {
+    const show = type === 'all' || card.dataset.tm === type;
+    card.classList.toggle('tm-hidden', !show);
+  });
+}
+
+// ── PROGRESS BAR ──
 const pb = document.createElement('div');
 pb.id = 'progress-bar';
 document.body.prepend(pb);
-
 window.addEventListener('scroll', () => {
   const docH = document.documentElement.scrollHeight - window.innerHeight;
   pb.style.width = (window.scrollY / docH * 100) + '%';
   highlightNav();
 });
 
-// --- ACTIVE NAV ---
-const sections = ['tam-gioi','nhan-gioi','canh-gioi','phap-mon','tong-mon','yeu-gioi','ma-gioi','than-gioi','di-giao','loi-choi'];
+// ── ACTIVE NAV ──
+const sections = ['tam-gioi','nhan-gioi','canh-gioi','phap-mon','tong-mon',
+                  'yeu-gioi','ma-gioi','than-gioi','di-giao','loi-choi','checklist'];
 function highlightNav() {
   let current = '';
   sections.forEach(id => {
     const el = document.getElementById(id);
-    if (el && window.scrollY >= el.getBoundingClientRect().top + window.scrollY - 100) {
+    if (el && window.scrollY >= el.getBoundingClientRect().top + window.scrollY - 120) {
       current = id;
     }
   });
@@ -1419,7 +1483,7 @@ function highlightNav() {
   });
 }
 
-// --- SMOOTH SCROLL ---
+// ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
@@ -1428,15 +1492,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// --- CHECKLIST (localStorage) ---
+// ── CHECKLIST ──
 const STORAGE_KEY = 'thuong-minh-checklist';
 function loadChecklist() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    saved.forEach(i => {
-      const items = document.querySelectorAll('.checklist li');
-      if (items[i]) items[i].classList.add('done');
-    });
+    const items = document.querySelectorAll('.checklist li');
+    saved.forEach(i => { if (items[i]) items[i].classList.add('done'); });
   } catch(e) {}
 }
 function saveChecklist() {
@@ -1446,7 +1508,7 @@ function saveChecklist() {
   });
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch(e) {}
 }
-function toggleCheck(li, i) {
+function toggleCheck(li) {
   li.classList.toggle('done');
   saveChecklist();
 }
@@ -1456,7 +1518,7 @@ function resetChecklist() {
 }
 loadChecklist();
 
-// --- FADE-IN OBSERVER ---
+// ── FADE-IN ON SCROLL ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1464,9 +1526,11 @@ const observer = new IntersectionObserver(entries => {
       observer.unobserve(e.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 
-document.querySelectorAll('.realm-card,.pm-card,.tm-card,.region-card,.bh-card,.dg-card,.tip-card,.bc-item,.cg-item').forEach(el => {
+document.querySelectorAll(
+  '.realm-card,.pm-card,.tm-card,.region-card,.bh-card,.dg-card,.tip-card,.bc-item,.cg-item'
+).forEach(el => {
   el.style.opacity = '0';
   observer.observe(el);
 });
