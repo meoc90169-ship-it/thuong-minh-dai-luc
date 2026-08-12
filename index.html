@@ -372,6 +372,16 @@
     color: var(--gold); font-weight: 600; margin-bottom: 10px;
   }
   .tm-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.65; }
+  .tm-card.tm-luc-dai {
+    border: 1.5px solid var(--gold);
+    background: linear-gradient(160deg, var(--scroll) 0%, var(--gold-pale) 130%);
+  }
+  .tm-badge-luc-dai {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 9px; border-radius: 10px; margin-right: 6px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    color: #FFFDF7; letter-spacing: 0.5px;
+  }
 
   /* BAT HOANG */
   .bat-hoang-grid {
@@ -970,28 +980,56 @@
 
   <div class="tong-mon-grid" id="tm-grid">
 
-    <!-- CHÍNH ĐẠO -->
-    <div class="tm-card" data-tm="chinh">
+    <!-- LỤC ĐẠI TÔNG MÔN (canon, xếp đầu theo thứ tự) -->
+    <div class="tm-card tm-luc-dai" data-tm="chinh">
       <div class="tm-name">⚔️ Thiên Diễn Kiếm Tông</div>
       <div class="tm-type">Kiếm Tu · Đứng đầu Lục Đại Tông Môn · Trung Châu Bắc</div>
       <p>Tông môn kiếm tu quyền lực nhất Nhân Giới. Trọng đạo tâm và kiếm ý tinh thuần hơn số lượng đệ tử. Hay so tài với Phá Sơn Đao Tông — không thù không bạn nhưng đối trọng tự nhiên.</p>
+      <span class="tm-badge-luc-dai">Lục Đại Tông Môn</span>
       <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
 
-    <div class="tm-card" data-tm="chinh">
-      <div class="tm-name">🪓 Phá Sơn Đao Tông</div>
-      <div class="tm-type">Đao Tu · Tây Vực (vách đá sa mạc phía Đông)</div>
-      <p>Tông môn chiến đấu thuần túy, nổi tiếng cương mãnh. Đệ tử đa số xuất thân võ gia, quân đội. <em>Không trọng xuất thân — chỉ trọng thực lực.</em> Đối trọng tự nhiên với Thiên Diễn Kiếm Tông.</p>
-      <span class="tm-badge badge-chinh">Chính đạo</span>
-    </div>
-
-    <div class="tm-card" data-tm="chinh">
+    <div class="tm-card tm-luc-dai" data-tm="chinh">
       <div class="tm-name">🌀 Thanh Vân Tiên Tông</div>
       <div class="tm-type">Pháp Tu · Phù Sư · Trận Sư · Trung Châu Đông</div>
       <p>Tông môn trận pháp-pháp thuật đỉnh cao. Kết giới và phù chú là thế mạnh cốt lõi. Cũng có nhánh Họa tu giao thoa với trận đạo. Nằm trên núi cổ phía Đông Trung Châu.</p>
+      <span class="tm-badge-luc-dai">Lục Đại Tông Môn</span>
       <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
 
+    <div class="tm-card tm-luc-dai" data-tm="chinh">
+      <div class="tm-name">💪 Cửu Hoang Thể Tông</div>
+      <div class="tm-type">Thể Tu · Đứng đầu về thể tu · Bắc Nguyên</div>
+      <p>Tông môn thể tu đứng đầu Nhân Giới. Tuyển đệ tử khắt khe. Khí hậu khắc nghiệt Bắc Nguyên là điều kiện lý tưởng rèn nhục thân. Chi phí tu luyện cao — đan dược bồi bổ tốn kém.</p>
+      <span class="tm-badge-luc-dai">Lục Đại Tông Môn</span>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <div class="tm-card tm-luc-dai" data-tm="chinh">
+      <div class="tm-name">💊 Vạn Dược Cốc</div>
+      <div class="tm-type">Luyện Đan · Nam Viêm Địa · Gần Ly Hoang</div>
+      <p>Cung cấp 6/10 đan dược toàn Nhân Giới. Đặt trong thung lũng dược thảo sâu rừng nhiệt đới. Quyền lực y dược gần như độc quyền. Tranh nhau quyền ưu tiên vào Vân Mộng Trạch mỗi chu kỳ.</p>
+      <span class="tm-badge-luc-dai">Lục Đại Tông Môn</span>
+      <span class="tm-badge badge-chinh">Chính đạo — Được tôn trọng toàn tam giới</span>
+    </div>
+
+    <div class="tm-card tm-luc-dai" data-tm="chinh">
+      <div class="tm-name">🪓 Phá Sơn Đao Tông</div>
+      <div class="tm-type">Đao Tu · Tây Vực (vách đá sa mạc phía Đông)</div>
+      <p>Tông môn chiến đấu thuần túy, nổi tiếng cương mãnh. Đệ tử đa số xuất thân võ gia, quân đội. <em>Không trọng xuất thân — chỉ trọng thực lực.</em> Đối trọng tự nhiên với Thiên Diễn Kiếm Tông.</p>
+      <span class="tm-badge-luc-dai">Lục Đại Tông Môn</span>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <div class="tm-card tm-luc-dai" data-tm="chinh">
+      <div class="tm-name">🔩 Cửu Cơ Các</div>
+      <div class="tm-type">Khôi Lỗi · Vừa tông môn vừa thương hội · Tây Vực</div>
+      <p>Tổ chức chế tác và nghiên cứu bù nhìn cơ khí. Bán sản phẩm cho cả tông môn lẫn triều đình. Đặt tại vùng sa mạc ít linh khí — buộc phải dùng cơ quan thay thế nhân lực. Quan hệ gần Tư Thiên Gia.</p>
+      <span class="tm-badge-luc-dai">Lục Đại Tông Môn</span>
+      <span class="tm-badge badge-chinh">Chính đạo</span>
+    </div>
+
+    <!-- CHÍNH ĐẠO KHÁC -->
     <div class="tm-card" data-tm="chinh">
       <div class="tm-name">🖌️ Thiên Họa Các</div>
       <div class="tm-type">Họa Tu · Vừa tông môn vừa học viện</div>
@@ -1007,13 +1045,6 @@
     </div>
 
     <div class="tm-card" data-tm="chinh">
-      <div class="tm-name">💪 Cửu Hoang Thể Tông</div>
-      <div class="tm-type">Thể Tu · Đứng đầu về thể tu · Bắc Nguyên</div>
-      <p>Tông môn thể tu đứng đầu Nhân Giới. Tuyển đệ tử khắt khe. Khí hậu khắc nghiệt Bắc Nguyên là điều kiện lý tưởng rèn nhục thân. Chi phí tu luyện cao — đan dược bồi bổ tốn kém.</p>
-      <span class="tm-badge badge-chinh">Chính đạo</span>
-    </div>
-
-    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">📚 Thánh Văn Các</div>
       <div class="tm-type">Nho Tu · Học viện & Pháp lý Nhân Giới · Kinh thành</div>
       <p>Không phải tông môn chiến đấu — là học viện kiêm tổ chức pháp lý. Soạn thảo khế ước, phân xử tranh chấp. <em>Không ai dám phá khế ước có dấu Thánh Văn Các.</em></p>
@@ -1021,23 +1052,9 @@
     </div>
 
     <div class="tm-card" data-tm="chinh">
-      <div class="tm-name">💊 Vạn Dược Cốc</div>
-      <div class="tm-type">Luyện Đan · Nam Viêm Địa · Gần Ly Hoang</div>
-      <p>Cung cấp 6/10 đan dược toàn Nhân Giới. Đặt trong thung lũng dược thảo sâu rừng nhiệt đới. Quyền lực y dược gần như độc quyền. Tranh nhau quyền ưu tiên vào Vân Mộng Trạch mỗi chu kỳ.</p>
-      <span class="tm-badge badge-chinh">Chính đạo — Được tôn trọng toàn tam giới</span>
-    </div>
-
-    <div class="tm-card" data-tm="chinh">
       <div class="tm-name">⚙️ Tư Thiên Gia</div>
       <div class="tm-type">Luyện Khí · Danh gia · Bắc Tây Kim Nguyên</div>
       <p>Gia tộc danh gia chế tác pháp khí hàng đầu. Được nghi ngờ giữ bí thuật luyện khí thượng cổ. Kết hợp chặt với Cửu Cơ Các — cùng hướng chế tác pháp khí.</p>
-      <span class="tm-badge badge-chinh">Chính đạo</span>
-    </div>
-
-    <div class="tm-card" data-tm="chinh">
-      <div class="tm-name">🔩 Cửu Cơ Các</div>
-      <div class="tm-type">Khôi Lỗi · Vừa tông môn vừa thương hội · Tây Vực</div>
-      <p>Tổ chức chế tác và nghiên cứu bù nhìn cơ khí. Bán sản phẩm cho cả tông môn lẫn triều đình. Đặt tại vùng sa mạc ít linh khí — buộc phải dùng cơ quan thay thế nhân lực. Quan hệ gần Tư Thiên Gia.</p>
       <span class="tm-badge badge-chinh">Chính đạo</span>
     </div>
 
@@ -1496,8 +1513,19 @@ function highlightNav() {
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const doScroll = () => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    // Đợi web font (Noto Serif/Sans, Ma Shan Zheng) tải & áp dụng xong trước khi
+    // tính vị trí cuộn — nếu không, lần bấm đầu tiên (khi font còn đang load)
+    // sẽ tính toạ độ theo layout font tạm, rồi bị lệch khi font thật load xong
+    // và làm reflow trang ngay giữa lúc đang cuộn.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(doScroll);
+    } else {
+      doScroll();
+    }
   });
 });
 
